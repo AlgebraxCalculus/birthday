@@ -1317,9 +1317,9 @@ audio {
 
 .navbar.navbar-fixed-bottom {
     position: fixed;
-    bottom: 10px;
+    bottom: 20px;
 }
 
 .col-md-6.text-center.col-md-offset-3 {
-    margin-top: 5px;
+    margin-top: 10px;
 }
