@@ -31,15 +31,9 @@ $('document').ready(function () {
     });
   });
 
-  $('#play').click(function () {
-    var audio = $('.song')[0];
-    audio.loop = false; // Prevent audio from looping
-    audio.play();
-    // Add event listener to handle audio end
-    audio.addEventListener('ended', function () {
-      audio.pause(); // Explicitly pause the audio
-      audio.currentTime = 0; // Reset to start but keep paused
-    });
+  $('#play').click(function(){
+		var audio = $('.song')[0];
+        audio.play();
     $('#bulb_yellow').addClass('bulb-glow-yellow-after');
     $('#bulb_red').addClass('bulb-glow-red-after');
     $('#bulb_blue').addClass('bulb-glow-blue-after');
@@ -147,11 +141,11 @@ $('document').ready(function () {
         $('#Pic' + i).css('opacity', '0');
       }
       const positions = [
-		{ top: '70px', left: '40px' },
-		{ top: '70px', right: '40px' },
-		{ bottom: '70px', left: '40px' },
-		{ bottom: '70px', right: '40px' }
-	];
+        { top: '70px', left: '40px' },
+        { top: '70px', right: '40px' },
+        { bottom: '70px', left: '40px' },
+        { bottom: '70px', right: '40px' }
+      ];
 
       for (let j = 0; j < 4; j++) {
         let picId = startIndex + j;
