@@ -1302,8 +1302,8 @@ audio {
 
 .birthday_picture img {
     position: fixed;
-    width: 300px; /* Reduced width for better spacing */
-    height: 300px; /* Adjusted height to match aspect ratio */
+    width: 270px; /* Reduced width for better spacing */
+    height: 270px; /* Adjusted height to match aspect ratio */
     object-fit: cover;
     opacity: 0;
     z-index: 1001;
@@ -1311,4 +1311,13 @@ audio {
     border-radius: 12px;
     box-shadow: 0 0 10px #333;
     pointer-events: none;
+	margin: -15px;
+}
+
+.navbar.navbar-fixed-bottom {
+    position: fixed;
+    bottom: 10px;
+}
+.col-md-6.text-center.col-md-offset-3 {
+    margin-top: 5px;
 }
