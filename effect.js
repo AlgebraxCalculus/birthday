@@ -3,7 +3,7 @@ $(window).load(function () {
   $('.container').fadeIn('fast');
 });
 
-$('document').ready(function () {
+$(document).ready(function () {
   var vw;
 
   $(window).resize(function () {
@@ -31,9 +31,9 @@ $('document').ready(function () {
     });
   });
 
-  $('#play').click(function(){
-		var audio = $('.song')[0];
-        audio.play();
+  $('#play').click(function () {
+    var audio = $('.song')[0];
+    audio.play();
     $('#bulb_yellow').addClass('bulb-glow-yellow-after');
     $('#bulb_red').addClass('bulb-glow-red-after');
     $('#bulb_blue').addClass('bulb-glow-blue-after');
@@ -136,10 +136,8 @@ $('document').ready(function () {
 
     msgLoop(0);
 
-    function showCornerBatch(startIndex) {
-      for (let i = 1; i <= 16; i++) {
-        $('#Pic' + i).css('opacity', '0');
-      }
+    function showCornerBatch(startIndex, containerClass, maxIndex) {
+      $(`.${containerClass} img`).css('opacity', '0');
       const positions = [
         { top: '70px', left: '40px' },
         { top: '70px', right: '40px' },
@@ -149,11 +147,11 @@ $('document').ready(function () {
 
       for (let j = 0; j < 4; j++) {
         let picId = startIndex + j;
-        if (picId <= 16) {
-          const pic = $('#Pic' + picId);
+        if (picId <= maxIndex) {
+          const pic = $(`.${containerClass} #Pic${picId}`);
           pic.css('opacity', '1');
           pic.css({ top: '', left: '', right: '', bottom: '' });
-          pic.css(positions[j]);
+          pic.css(positions[j % 4]); // Lặp lại vị trí nếu cần
         }
       }
     }
@@ -161,10 +159,43 @@ $('document').ready(function () {
     let currentIndex = 1;
 
     function startCornerPictureRotationOnce() {
-      showCornerBatch(currentIndex);
+      showCornerBatch(currentIndex, 'birthday_picture', 16);
       currentIndex += 4;
       if (currentIndex <= 16) {
-        setTimeout(startCornerPictureRotationOnce, 5000);
+        setTimeout(startCornerPictureRotationOnce, 7000);
+      } else {
+        // Giữ 4 ảnh cuối (pic13 đến pic16) và không ẩn birthday_picture
+        showCornerBatch(13, 'birthday_picture', 16);
+        setTimeout(() => {
+          $('.bannar, .cake, .balloons').hide(); // Ẩn các phần tử khác, giữ birthday_picture
+          // Chuyển sang card_picture sau 5 giây
+          setTimeout(() => {
+            $('.card_picture').fadeIn(6000);
+
+            const cardImages = $('.card_picture img');
+            let currentCardIndex = 17; // Bắt đầu từ Pic17
+
+            function showNextCard() {
+              if (currentCardIndex <= 21) { // Dừng khi đến Pic21
+                // Ẩn tất cả ảnh
+                cardImages.css('opacity', '0');
+                // Hiển thị ảnh hiện tại ở trung tâm
+                $(`.card_picture #Pic${currentCardIndex}`).css({
+                  opacity: '1',
+                  position: 'fixed',
+                  top: '50%',
+                  left: '50%',
+                  transform: 'translate(-50%, -50%)',
+                  width: '800px',
+                  height: 'auto'
+                });
+                currentCardIndex++;
+                setTimeout(showNextCard, 20000); // 20 giây mỗi ảnh
+              } // Không fadeOut khi hết, giữ hiển thị
+            }
+            showNextCard(); // Bắt đầu với ảnh đầu tiên
+          }, 5000); // Dừng 5 giây để xem 4 ảnh cuối
+        }, 7000); // Độ trễ 7 giây sau khi hiển thị 4 ảnh cuối
       }
     }
   });
